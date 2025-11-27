@@ -53,6 +53,10 @@
         "WEB_OF_SCIENCE_API_KEY": "",
         "PUBMED_API_KEY": ""
       }
+    },
+    "docx-edit-server": {
+      "command": "python",
+      "args": ["-m", "iflow_mcp_office_word_mcp_server", "--workspace-path", "."]
     }
   },
   "httpTransport": {
