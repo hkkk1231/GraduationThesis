@@ -1,0 +1,63 @@
+{
+  "mcpServers": {
+    "zotero": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-zotero"],
+      "env": {
+        "ZOTERO_API_KEY": "CIApUKos6l9E0GOaCBrILRrt",
+        "ZOTERO_LIBRARY_ID": "18982351",
+        "ZOTERO_LIBRARY_TYPE": "user"
+      }
+    },
+    "pdf-reader": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-pdf-reader"]
+    },
+    "zotero-enhanced": {
+      "command": "npx",
+      "args": ["-y", "cookjohn/zotero-mcp"],
+      "env": {
+        "ZOTERO_API_KEY": "CIApUKos6l9E0GOaCBrILRrt",
+        "ZOTERO_LIBRARY_ID": "18982351",
+        "ZOTERO_LIBRARY_TYPE": "user"
+      }
+    },
+    "zotero-pdf": {
+      "command": "npx",
+      "args": ["-y", "54yyyu/zotero-mcp"],
+      "env": {
+        "ZOTERO_API_KEY": "CIApUKos6l9E0GOaCBrILRrt",
+        "ZOTERO_LIBRARY_ID": "18982351",
+        "ZOTERO_LIBRARY_TYPE": "user"
+      }
+    },
+    "morphik": {
+      "command": "npx",
+      "args": ["-y", "morphik-mcp"],
+      "env": {
+        "MORPHIK_API_KEY": ""
+      }
+    },
+    "document-processor": {
+      "command": "npx",
+      "args": ["-y", "document-processing-mcp"],
+      "env": {
+        "ABBYY_API_KEY": ""
+      }
+    },
+    "academic-search": {
+      "command": "npx",
+      "args": ["-y", "academic-search-mcp"],
+      "env": {
+        "ARXIV_API_KEY": "",
+        "WEB_OF_SCIENCE_API_KEY": "",
+        "PUBMED_API_KEY": ""
+      }
+    }
+  },
+  "httpTransport": {
+    "enabled": true,
+    "port": 3000,
+    "host": "localhost"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "thesis-ai-tools",
+  "version": "1.0.0",
+  "description": "AI工具辅助毕业论文写作",
+  "main": "index.js",
+  "scripts": {
+    "install-mcp": "npm install -g @modelcontextprotocol/server-zotero @modelcontextprotocol/server-pdf-reader",
+    "install-enhanced": "npm install -g cookjohn/zotero-mcp 54yyyu/zotero-mcp",
+    "install-specialized": "npm install -g morphik-mcp document-processing-mcp academic-search-mcp",
+    "setup": "npm run install-mcp && npm run install-enhanced && npm run install-specialized",
+    "start-mcp": "node mcp-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
