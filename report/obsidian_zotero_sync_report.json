@@ -1,0 +1,10 @@
+{
+  "测试时间": "2025-11-27T15:30:24.621929",
+  "测试结果": {
+    "zotero_connection": true,
+    "obsidian_structure": true,
+    "templates": true,
+    "pdf_folder": true,
+    "test_note": false
+  }
+}
