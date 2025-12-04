@@ -141,6 +141,15 @@
 
 ---
 
+### 4. 第一阶段进度小结 Phase 1 Progress
+
+- 已完成 `thesis_tools/` 包搭建：`zotero_ingest.py`、`zotero_analysis.py`、`obsidian_export.py`、`sync_checks.py`、`models.py`、`schemas.py` 均已落地，其中 `models.py` / `schemas.py` 暂为占位。
+- 已创建 `scripts/` 入口脚本：`scripts/get_zotero_items.py`、`scripts/get_recent_literature.py`、`scripts/create_obsidian_notes.py` 等负责命令行入口与日志输出，内部复用 `thesis_tools` 中的功能函数。
+- 根目录原有脚本（如 `get_zotero_items.py`、`get_recent_literature.py`、`create_obsidian_notes.py`、`test_zotero_api.py`、`test_obsidian_zotero_sync.py`）已改造成薄入口，主要职责是转发到 `scripts/` 或 `thesis_tools`，保持原有调用方式不变。
+- `test_zotero_api.py` 和 `test_obsidian_zotero_sync.py` 的核心检查逻辑已抽取入 `thesis_tools.sync_checks`，两处测试与后续 CLI 将共用同一套健康检查实现，属于“重排结构、不改业务语义”的调整，符合第一阶段的改造边界。
+
+---
+
 ## 六、第二阶段：领域模型与数据流抽象 Phase 2 – Domain Models & Data Flow
 
 目标：让“文献、笔记、分析结果”都有统一、明确的数据结构与 schema，减少隐式耦合。
@@ -200,7 +209,7 @@
   - `tests/test_obsidian_export.py`
   - `tests/test_pipeline_e2e.py`（端到端小样本测试）
 - 迁移现有脚本中的检查逻辑：
-  - 将 `test_zotero_api.py`、`test_obsidian_zotero_sync.py` 的核心部分抽到 `thesis_tools.sync_checks`，测试和 CLI 共同复用。
+  - 基于第一阶段已完成的 `thesis_tools.sync_checks`，在 `tests/` 下复用同一套检查函数，并为 CLI 提供统一入口（不再在脚本中复制检查代码）。
 - 使用 `pytest` 或 `unittest`：
   - 确保文献解析、笔记生成、关键 CLI 子命令能稳定运行。
 
@@ -229,4 +238,3 @@
   - 本地 `main` 与 `origin/main` 内容一致  
   - 没有未推送的本地修改  
 - 因此，本次重构计划基于 **当前远程仓库最新结构** 制定，可以直接按上述阶段在新分支或主干上推进。
-
