@@ -1,76 +1,6 @@
 {
   "recent_literature": [
     {
-      "key": "57T8RALW",
-      "title": "基于教学评一体化的小学英语阅读教学中AI技术的运用",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "吴雪云"
-        }
-      ],
-      "date": "2025",
-      "abstractNote": "本文探讨教学评一体化视角下AI技术在小学英语阅读教学中的应用策略研究。通过分析教学评一体化理念与AI辅助小学英语阅读教学的融合路径，提出构建AI赋能教学评一体化的阅读教学模式。文章着重阐述AI技术如何助力阅读前教学设计与评价导向、阅读中交互反馈与即时评估、阅读后巩固拓展与多元评价等环节，探索AI支持下的教学评一体化实施策略，为创新教学评价模式提供实践指导。教学评一体化理念与AI技术深度融合，为提升小学英语阅读教学质量、优化学习体验提供新思路。",
-      "publicationTitle": "校园英语",
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "人工智能",
-          "type": 1
-        },
-        {
-          "tag": "小学英语",
-          "type": 1
-        },
-        {
-          "tag": "教学评一体化",
-          "type": 1
-        },
-        {
-          "tag": "阅读教学",
-          "type": 1
-        }
-      ],
-      "notes": []
-    },
-    {
-      "key": "LYU2NHGD",
-      "title": "困境与突破：乡村中小学人工智能教育的实践审思",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "韩春钰"
-        },
-        {
-          "creatorType": "author",
-          "name": "曾晓阳"
-        }
-      ],
-      "date": "2025",
-      "abstractNote": "在数字化时代背景下，中小学开展人工智能教育刻不容缓，这是培养学生数字素养和创新能力的重要举措。当前，乡村中小学人工智能教育面临数字资源短缺、师资力量不足、教育评价缺失三大困境，其发展严重受阻。基于此，本文提出构建智慧生态以弥合资源鸿沟、加强师资建设以提升教学质量、实施多元评价以健全评价机制三条可行路径，以期推动乡村中小学人工智能教育的高质量发展，培养社会所需的创新型、复合型人才。",
-      "publicationTitle": "文教资料",
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "乡村中小学",
-          "type": 1
-        },
-        {
-          "tag": "人工智能教育",
-          "type": 1
-        },
-        {
-          "tag": "困境",
-          "type": 1
-        },
-        {
-          "tag": "路径",
-          "type": 1
-        }
-      ],
-      "notes": []
-    },
-    {
       "key": "EI8ZXWAG",
       "title": "\"测试文献\"",
       "creators": [],
@@ -79,7 +9,16 @@
       "publicationTitle": "",
       "itemType": "journalArticle",
       "tags": [],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T06:04:41Z",
+      "dateModified": "2025-11-27T06:04:41Z",
+      "url": "",
+      "doi": "",
+      "pages": "",
+      "volume": "",
+      "issue": "",
+      "publisher": "",
+      "language": ""
     },
     {
       "key": "CYUJ5GAZ",
@@ -108,7 +47,16 @@
           "type": 1
         }
       ],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:53Z",
+      "dateModified": "2025-11-27T05:49:53Z",
+      "url": "https://kns.cnki.net/kcms2/article/abstract?v=LYi8dJWcB0UH3DHXrry6g5iDro_tcL9I3vEVPIFk5CGaeutT34LgxJ8lu3wyx90pA2p0Q1FZjhsV4uLidZ2ROIJDoIi-faB8aeV4siMLJIZixdh-CjdLz5u65fXDVYvzR9VX9yGliDaxoEyto6GGelpZMuGzlZKuGKRPTFO0KPAv_oUUZwFJMNGe1g45f9ex&uniplatform=NZKPT&language=CHS",
+      "doi": "",
+      "pages": "53-54",
+      "volume": "",
+      "issue": "19",
+      "publisher": "",
+      "language": "zh-CN"
     },
     {
       "key": "EVXUFF5Z",
@@ -145,7 +93,16 @@
           "type": 1
         }
       ],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:52Z",
+      "dateModified": "2025-11-27T05:49:52Z",
+      "url": "https://link.cnki.net/doi/10.19878/j.cnki.zxxjcjx.2025.06.008",
+      "doi": "",
+      "pages": "69-74",
+      "volume": "",
+      "issue": "6",
+      "publisher": "",
+      "language": "zh-CN"
     },
     {
       "key": "MIDZZMNP",
@@ -169,7 +126,16 @@
       "publicationTitle": "中小学数字化教学",
       "itemType": "journalArticle",
       "tags": [],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:51Z",
+      "dateModified": "2025-11-27T05:49:51Z",
+      "url": "https://kns.cnki.net/kcms2/article/abstract?v=LYi8dJWcB0VSdLdS-p-QoajAOSOLwF0Di77t2XbGzJqNx3T1EtLBQKo8D2sEXmsBX0X8CpxsTz2kTZ8BR7UrxZ2_MEh6nijHpJfJZx27jUV4J8K8Xx9Hzd-uokgi80Tru61HQ2ifoKD7yyorPM-ML1AYoFDhdEnerXseVnMC3MBfce4G63iLoc_nU8hsADEg&uniplatform=NZKPT&language=CHS",
+      "doi": "",
+      "pages": "86-90",
+      "volume": "",
+      "issue": "6",
+      "publisher": "",
+      "language": "zh-CN"
     },
     {
       "key": "P5B744AB",
@@ -202,7 +168,16 @@
           "type": 1
         }
       ],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:50Z",
+      "dateModified": "2025-11-27T05:49:50Z",
+      "url": "https://kns.cnki.net/kcms2/article/abstract?v=LYi8dJWcB0WGYhP4KOKf4oKsNdn8O9MGhB28VqEiV31RnH5tz2PSl92tjiFV-cE1Gz-59AqBe6JM4iS4ZX1OCjn6ztECsp0PJg5Jl74bMIH8taYMNqaPOFAMdNnvX3TXrrrPg-Pw9YWeOvktur7XW01-KbE3_XdHDqc80WXDNIl56jw77Ua6u4h9AJy4SWbJ&uniplatform=NZKPT&language=CHS",
+      "doi": "",
+      "pages": "48-50",
+      "volume": "",
+      "issue": "6",
+      "publisher": "",
+      "language": "zh-CN"
     },
     {
       "key": "4EYKKM2C",
@@ -243,7 +218,16 @@
           "type": 1
         }
       ],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:48Z",
+      "dateModified": "2025-11-27T05:49:49Z",
+      "url": "https://link.cnki.net/doi/10.27855/d.cnki.glysf.2025.000168",
+      "doi": "",
+      "pages": "",
+      "volume": "",
+      "issue": "",
+      "publisher": "",
+      "language": "zh-CN"
     },
     {
       "key": "5M9Y5VXH",
@@ -280,7 +264,70 @@
           "type": 1
         }
       ],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:45Z",
+      "dateModified": "2025-11-27T05:49:45Z",
+      "url": "https://link.cnki.net/doi/10.27441/d.cnki.gyzdu.2025.000552",
+      "doi": "",
+      "pages": "",
+      "volume": "",
+      "issue": "",
+      "publisher": "",
+      "language": "zh-CN"
+    },
+    {
+      "key": "B22FRLF4",
+      "title": "如何用人工智能工具开展小学科学课程教学设计——AIGC提示词设计的策略研究",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "钱浩冉"
+        },
+        {
+          "creatorType": "author",
+          "name": "赵姝"
+        },
+        {
+          "creatorType": "author",
+          "name": "孟小莙"
+        },
+        {
+          "creatorType": "author",
+          "name": "刘明琪"
+        },
+        {
+          "creatorType": "author",
+          "name": "陈婷婷"
+        }
+      ],
+      "date": "2025",
+      "abstractNote": "在人工智能时代背景下，技术创新推动的教学创新已成为教育实践的热潮。其中，生成式人工智能技术为小学科学课程教学设计带来了革新的机遇。本研究基于生成式大语言模型的核心特征，探讨在小学科学课程教学设计中应用生成式人工智能技术的提示词设计策略，并提出TAD、SATE、SPICE三种提示策略。这些策略旨在辅助小学科学教师更高效地利用生成式人工智能工具进行教学设计，从而提高教学效率。",
+      "publicationTitle": "中小学电教",
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "AIGC提示词设计",
+          "type": 1
+        },
+        {
+          "tag": "小学科学",
+          "type": 1
+        },
+        {
+          "tag": "教学设计",
+          "type": 1
+        }
+      ],
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:43Z",
+      "dateModified": "2025-11-27T05:49:44Z",
+      "url": "https://kns.cnki.net/kcms2/article/abstract?v=LYi8dJWcB0Uu3k59cz2aNkvUvTgG-9kkrtSUEBsBlrFLtSHLj49hJ-Gg1-oiNk6rfrJ7sJqzf6SbE9lwbRemK2y5Dz5cZBdBTANZg5ltTWD_W8uI9bxM3XEiZT3GXfN3LiPcl2ocMOz7Fpq21YXgd7l-3wLCdzjLPWQyJ6XPPRq4gVJEngOrftUUmaHtLGuw&uniplatform=NZKPT&language=CHS",
+      "doi": "",
+      "pages": "16-19",
+      "volume": "",
+      "issue": "6",
+      "publisher": "",
+      "language": "zh-CN"
     },
     {
       "key": "8IUEWFMQ",
@@ -313,11 +360,66 @@
           "type": 1
         }
       ],
-      "notes": []
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:43Z",
+      "dateModified": "2025-11-27T05:49:44Z",
+      "url": "https://kns.cnki.net/kcms2/article/abstract?v=LYi8dJWcB0WMeogiirJtL8j2KL-G9BhB-QUiaXAV6I-SFijNCqXGSjAGwbAk9mjpLSV06O3qS0gByr0UaQEGY02McaYgU__6ZSoqZIwZD0_UDv7ieKprvkg3SLP51NJNSifQw_UoItFY0LkB60-QdRODB6OOmeOFCbueU-9JbeF446r2umvWwdwM0iOi3X1B&uniplatform=NZKPT&language=CHS",
+      "doi": "",
+      "pages": "96-99",
+      "volume": "",
+      "issue": "13",
+      "publisher": "",
+      "language": "zh-CN"
+    },
+    {
+      "key": "LYU2NHGD",
+      "title": "困境与突破：乡村中小学人工智能教育的实践审思",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "韩春钰"
+        },
+        {
+          "creatorType": "author",
+          "name": "曾晓阳"
+        }
+      ],
+      "date": "2025",
+      "abstractNote": "在数字化时代背景下，中小学开展人工智能教育刻不容缓，这是培养学生数字素养和创新能力的重要举措。当前，乡村中小学人工智能教育面临数字资源短缺、师资力量不足、教育评价缺失三大困境，其发展严重受阻。基于此，本文提出构建智慧生态以弥合资源鸿沟、加强师资建设以提升教学质量、实施多元评价以健全评价机制三条可行路径，以期推动乡村中小学人工智能教育的高质量发展，培养社会所需的创新型、复合型人才。",
+      "publicationTitle": "文教资料",
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "乡村中小学",
+          "type": 1
+        },
+        {
+          "tag": "人工智能教育",
+          "type": 1
+        },
+        {
+          "tag": "困境",
+          "type": 1
+        },
+        {
+          "tag": "路径",
+          "type": 1
+        }
+      ],
+      "notes": [],
+      "dateAdded": "2025-11-27T05:49:41Z",
+      "dateModified": "2025-11-27T06:18:21Z",
+      "url": "https://kns.cnki.net/kcms2/article/abstract?v=LYi8dJWcB0W7auT4O17shDaUqW0Q2zj5Zvsv77oMWDbVvxUgBbAUiLg372Laz6b7CbFktm9Ao65EUB5W8CELj65XJN6QLIp5LkbihhKqQBN_WBprVre3t7DJorsZsbaopOO05HQNFO4wJq1XqaKOwLkp9nSEkOYI8D6uRHb3N7uhFBDrVUBWud0iCQJ1ePaQ&uniplatform=NZKPT&language=CHS",
+      "doi": "",
+      "pages": "147-149, 159",
+      "volume": "",
+      "issue": "17",
+      "publisher": "",
+      "language": "zh-CN"
     }
   ],
   "foreign_content_found": false,
   "potential_foreign_items": [],
-  "analysis_time": "2025-11-27T19:36:06.457388",
+  "analysis_time": "2025-12-04T11:46:19.945116",
   "total_recent_items": 10
 }
