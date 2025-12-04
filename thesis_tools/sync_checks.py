@@ -234,6 +234,43 @@ def check_zotero_sqlite() -> SyncCheckResult:
         )
 
 
+def check_zotero_sqlite() -> SyncCheckResult:
+    """测试 Zotero 本地数据库连接（覆盖旧版本以避免控制台编码问题）。"""
+    print("=== 测试Zotero数据库连接 ===")
+
+    zotero_path = Path.home() / "Zotero" / "zotero.sqlite"
+    if not zotero_path.exists():
+        print("Zotero数据库文件不存在")
+        return SyncCheckResult(
+            name="zotero_sqlite",
+            ok=False,
+            checked_at=datetime.now(),
+            message=f"not found: {zotero_path}",
+        )
+
+    try:
+        conn = sqlite3.connect(str(zotero_path))
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM items")
+        count = cursor.fetchone()[0]
+        conn.close()
+        print(f"Zotero数据库连接成功，共有 {count} 个条目")
+        return SyncCheckResult(
+            name="zotero_sqlite",
+            ok=True,
+            checked_at=datetime.now(),
+            message=f"items={count}",
+        )
+    except Exception as exc:  # pragma: no cover - I/O
+        print(f"Zotero数据库连接失败: {exc}")
+        return SyncCheckResult(
+            name="zotero_sqlite",
+            ok=False,
+            checked_at=datetime.now(),
+            message=str(exc),
+        )
+
+
 def check_obsidian_structure(base_path: Path) -> SyncCheckResult:
     """测试 Obsidian 目录结构。"""
     print("\n=== 测试Obsidian目录结构 ===")
@@ -392,6 +429,164 @@ def create_obsidian_test_note(notes_dir: Path) -> SyncCheckResult:
         )
 
 
+def check_obsidian_structure(base_obsidian_path: Path) -> SyncCheckResult:
+    """测试 Obsidian 目录结构（覆盖旧版本以避免控制台编码问题）。"""
+    print("\n=== 测试Obsidian目录结构 ===")
+
+    required_dirs = [
+        "文献笔记",
+        "PDF阅读",
+        "研究项目",
+        "核心概念",
+        "理论框架",
+        "模板",
+        "引用管理",
+    ]
+
+    all_exist = True
+    missing: List[str] = []
+
+    for dir_name in required_dirs:
+        dir_path = base_obsidian_path / dir_name
+        if dir_path.exists():
+            print(f"[OK] {dir_name} 目录存在")
+        else:
+            print(f"[MISSING] {dir_name} 目录不存在")
+            all_exist = False
+            missing.append(str(dir_path))
+
+    return SyncCheckResult(
+        name="obsidian_structure",
+        ok=all_exist,
+        checked_at=datetime.now(),
+        message=None if all_exist else f"missing: {', '.join(missing)}",
+    )
+
+
+def check_obsidian_templates(template_paths: List[Path]) -> SyncCheckResult:
+    """测试 Obsidian 模板文件是否存在（覆盖旧版本）。"""
+    print("\n=== 测试模板文件 ===")
+
+    all_exist = True
+    missing: List[str] = []
+
+    for template_path in template_paths:
+        if template_path.exists():
+            print(f"[OK] 模板存在: {template_path.name}")
+        else:
+            print(f"[MISSING] 模板不存在: {template_path.name}")
+            all_exist = False
+            missing.append(str(template_path))
+
+    return SyncCheckResult(
+        name="obsidian_templates",
+        ok=all_exist,
+        checked_at=datetime.now(),
+        message=None if all_exist else f"missing: {', '.join(missing)}",
+    )
+
+
+def check_pdf_reading_folder(pdf_folder: Path) -> SyncCheckResult:
+    """测试 PDF 阅读文件夹（覆盖旧版本）。"""
+    print("\n=== 测试PDF阅读文件夹 ===")
+
+    if pdf_folder.exists():
+        files = list(pdf_folder.glob("*"))
+        print(f"[OK] PDF阅读文件夹存在: {pdf_folder}")
+        print(f"  当前包含 {len(files)} 个文件")
+        return SyncCheckResult(
+            name="pdf_reading_folder",
+            ok=True,
+            checked_at=datetime.now(),
+            message=f"files={len(files)}",
+        )
+    print(f"[MISSING] PDF阅读文件夹不存在: {pdf_folder}")
+    return SyncCheckResult(
+        name="pdf_reading_folder",
+        ok=False,
+        checked_at=datetime.now(),
+        message=f"not found: {pdf_folder}",
+    )
+
+
+def create_obsidian_test_note(notes_dir: Path) -> SyncCheckResult:
+    """在 Obsidian 文献笔记目录中创建一个测试笔记（覆盖旧版本）。"""
+    print("\n=== 创建测试笔记 ===")
+
+    zotero_path = Path.home() / "Zotero" / "zotero.sqlite"
+
+    try:
+        conn = sqlite3.connect(str(zotero_path))
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT i.key, i.dateAdded, d.title, d.abstractNote
+            FROM items i
+            JOIN itemData d ON i.itemID = d.itemID
+            WHERE i.itemTypeID = 28
+            LIMIT 1
+        """
+        )
+        result = cursor.fetchone()
+        conn.close()
+
+        if not result:
+            print("未找到可用于测试的文献")
+            return SyncCheckResult(
+                name="obsidian_test_note",
+                ok=False,
+                checked_at=datetime.now(),
+                message="no suitable item found in Zotero",
+            )
+
+        key, date_added, title, abstract = result
+        notes_dir.mkdir(parents=True, exist_ok=True)
+
+        note_content = f"""# {title}
+
+**Zotero Key**: {key}
+**添加日期**: {date_added}
+
+## 摘要
+{abstract}
+
+## 测试笔记
+这是一个测试笔记，用于验证Obsidian与Zotero的集成功能。
+
+## 同步测试
+- [ ] Zotero中的注释能否同步到Obsidian
+- [ ] Obsidian中的链接能否跳转到Zotero
+- [ ] 文献元数据是否正确显示
+
+## 标签
+#测试笔记 #同步测试
+
+---
+*创建时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*
+*测试来源: Zotero Integration*
+"""
+
+        note_path = notes_dir / f"测试_{key}.md"
+        with open(note_path, "w", encoding="utf-8") as f:
+            f.write(note_content)
+
+        print(f"[OK] 测试笔记已创建: {note_path}")
+        return SyncCheckResult(
+            name="obsidian_test_note",
+            ok=True,
+            checked_at=datetime.now(),
+            message=str(note_path),
+        )
+    except Exception as exc:  # pragma: no cover - I/O
+        print(f"[FAILED] 创建测试笔记失败: {exc}")
+        return SyncCheckResult(
+            name="obsidian_test_note",
+            ok=False,
+            checked_at=datetime.now(),
+            message=str(exc),
+        )
+
+
 def run_obsidian_zotero_sync_checks(
     base_obsidian_path: Path,
 ) -> Tuple[Dict[str, bool], Dict[str, Any]]:
@@ -424,5 +619,3 @@ def run_obsidian_zotero_sync_checks(
     details["test_note"] = test_note_result.message
 
     return results, details
-
-

@@ -15,8 +15,14 @@ import re
 from typing import Any
 
 
+DEFAULT_ITEMS_FILE = r"E:\仓库\毕业论文\zotero_items.json"
+DEFAULT_FOREIGN_ANALYSIS_FILE = (
+    r"E:\仓库\毕业论文\foreign_literature_analysis.json"
+)
+
+
 def get_recent_literature_details(
-    items_file: str = r"E:\仓库\毕业论文\zotero_items.json",
+    items_file: str = DEFAULT_ITEMS_FILE,
     limit: int = 10,
 ) -> list[dict[str, Any]]:
     """获取最近添加的文献详细信息。"""
@@ -181,6 +187,169 @@ def check_for_foreign_content(
     return potential_foreign
 
 
+def is_foreign_literature(item: dict[str, Any]) -> bool:
+    """根据标题、摘要、期刊和作者信息判断是否为外文文献。"""
+    title = item.get("title", "").lower()
+    abstract = item.get("abstractNote", "").lower()
+    publication = item.get("publicationTitle", "").lower()
+    creators = item.get("creators", [])
+
+    has_foreign_authors = False
+    for creator in creators:
+        name = creator.get("name", "")
+        if " " in name and not re.search(r"[\u4e00-\u9fff]", name):
+            has_foreign_authors = True
+            break
+
+    has_english_title = bool(re.search(r"[a-zA-Z]", title)) and not re.search(
+        r"[\u4e00-\u9fff]", title
+    )
+    has_foreign_publication = bool(
+        re.search(r"[a-zA-Z]", publication)
+    ) and not re.search(r"[\u4e00-\u9fff]", publication)
+    has_foreign_abstract = bool(
+        re.search(r"[a-zA-Z]", abstract)
+    ) and not re.search(r"[\u4e00-\u9fff]", abstract)
+
+    return (
+        has_foreign_authors
+        or has_english_title
+        or has_foreign_publication
+        or has_foreign_abstract
+    )
+
+
+def extract_foreign_literature_info(item: dict[str, Any]) -> dict[str, Any]:
+    """提取外文文献信息，结构化为下游可直接使用的字典。"""
+    creators = item.get("creators", [])
+
+    author_list: list[str] = []
+    for creator in creators:
+        if creator.get("name"):
+            author_list.append(creator["name"])
+        elif creator.get("firstName") and creator.get("lastName"):
+            author_list.append(f"{creator['lastName']}, {creator['firstName']}")
+
+    date_value = item.get("date", "")
+    year_match = re.search(r"\b(19|20)\d{2}\b", date_value)
+    year = year_match.group() if year_match else date_value
+
+    tags = [
+        tag.get("tag", "")
+        for tag in item.get("tags", [])
+        if isinstance(tag, dict) and tag.get("tag")
+    ]
+
+    return {
+        "key": item.get("key", ""),
+        "title": item.get("title", ""),
+        "authors": author_list,
+        "year": year,
+        "abstract": item.get("abstractNote", ""),
+        "publication": item.get("publicationTitle", ""),
+        "item_type": item.get("itemType", ""),
+        "tags": tags,
+        "date_added": item.get("dateAdded", ""),
+        "url": item.get("url", ""),
+        "doi": item.get("doi", ""),
+        "pages": item.get("pages", ""),
+        "volume": item.get("volume", ""),
+        "issue": item.get("issue", ""),
+        "publisher": item.get("publisher", ""),
+        "language": item.get("language", ""),
+    }
+
+
+def analyze_foreign_literature(
+    items_file: str = DEFAULT_ITEMS_FILE,
+    output_file: str = DEFAULT_FOREIGN_ANALYSIS_FILE,
+    recent_limit: int = 5,
+) -> dict[str, Any] | None:
+    """从 Zotero JSON 中筛选外文文献，生成分析报告并写入 JSON。"""
+    print("=== 外文文献分析工具 ===")
+
+    try:
+        with open(items_file, "r", encoding="utf-8") as f:
+            items = json.load(f)
+    except Exception as exc:  # pragma: no cover - I/O
+        print(f"读取文件失败: {exc}")
+        return None
+
+    print(f"总文献数: {len(items)}")
+
+    foreign_literature: list[dict[str, Any]] = []
+    for item in items:
+        if item.get("itemType") == "attachment":
+            continue
+        if is_foreign_literature(item):
+            foreign_literature.append(extract_foreign_literature_info(item))
+
+    print(f"发现外文文献: {len(foreign_literature)} 篇")
+
+    if not foreign_literature:
+        print("未发现外文文献，展示部分文献供人工检查...")
+        for index, item in enumerate(items[:10], 1):
+            if item.get("itemType") == "attachment":
+                continue
+            print(f"\n{index}. {item.get('title', '')}")
+            print(f"   类型: {item.get('itemType', '')}")
+            print(f"   期刊: {item.get('publicationTitle', '')}")
+        return None
+
+    foreign_literature.sort(key=lambda x: x.get("date_added", ""), reverse=True)
+    recent_foreign = foreign_literature[:recent_limit]
+
+    print(f"\n=== 最近新增的 {recent_limit} 篇外文文献 ===")
+    for index, info in enumerate(recent_foreign, 1):
+        print(f"\n{'=' * 60}")
+        print(f"{index}. {info['title']}")
+        print(f"   Key: {info['key']}")
+        authors = ", ".join(info["authors"]) if info["authors"] else "未知"
+        print(f"   作者: {authors}")
+        print(f"   年份: {info['year'] or '未知'}")
+        print(f"   期刊: {info['publication'] or '未知'}")
+        print(f"   类型: {info['item_type']}")
+        if info.get("volume"):
+            print(f"   卷: {info['volume']}")
+        if info.get("issue"):
+            print(f"   期: {info['issue']}")
+        if info.get("pages"):
+            print(f"   页码: {info['pages']}")
+        if info.get("publisher"):
+            print(f"   出版社: {info['publisher']}")
+
+        abstract = info.get("abstract", "")
+        if abstract:
+            preview = abstract[:300] + "..." if len(abstract) > 300 else abstract
+            print(f"   摘要: {preview}")
+        else:
+            print("   摘要: 无")
+
+        if info.get("tags"):
+            print(f"   标签: {', '.join(info['tags'])}")
+        if info.get("doi"):
+            print(f"   DOI: {info['doi']}")
+        if info.get("url"):
+            print(f"   URL: {info['url']}")
+        print(f"   添加时间: {info['date_added']}")
+
+    report = {
+        "total_foreign_literature": len(foreign_literature),
+        "recent_5_foreign": recent_foreign,
+        "all_foreign_literature": foreign_literature,
+        "analysis_time": datetime.now().isoformat(),
+    }
+
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(report, f, ensure_ascii=False, indent=2)
+        print(f"\n外文文献分析结果已保存到: {output_file}")
+    except Exception as exc:  # pragma: no cover - I/O
+        print(f"保存文件时出错: {exc}")
+
+    return report
+
+
 def main() -> None:
     """命令行入口：获取最近文献并完成基础分析。"""
     print("=== Zotero 最近文献详细分析 ===")
@@ -211,4 +380,3 @@ def main() -> None:
 
 if __name__ == "__main__":  # pragma: no cover - 脚本入口
     main()
-

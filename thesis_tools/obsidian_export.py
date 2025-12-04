@@ -195,6 +195,20 @@ def generate_latest_notes(
     print(f"索引文件: {index_file}")
 
 
+def batch_create_notes() -> None:
+    """通过 legacy `batch_create_notes.py` 批量生成文献笔记。"""
+    from batch_create_notes import main as script_main
+
+    script_main()
+
+
+def create_sample_notes() -> None:
+    """通过 legacy `create_sample_notes.py` 创建示例文献/工作流笔记。"""
+    from create_sample_notes import main as script_main
+
+    script_main()
+
+
 def main() -> None:
     """命令行入口：基于默认路径生成最新文献笔记。"""
     print("=== 创建 Obsidian 文献笔记 ===")
@@ -212,4 +226,3 @@ def main() -> None:
 
 if __name__ == "__main__":  # pragma: no cover - 脚本入口
     main()
-
