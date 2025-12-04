@@ -17,21 +17,21 @@ from __future__ import annotations
 
 from datetime import datetime
 import json
-import os
 import re
 from typing import Any
 
 from .models import Literature
+from .paths import (
+    ZOTERO_ITEMS_FILE,
+    FOREIGN_LITERATURE_ANALYSIS_FILE,
+    RECENT_LITERATURE_ANALYSIS_FILE,
+)
 
 
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-DEFAULT_ITEMS_FILE = os.path.join(ROOT_DIR, "zotero_items.json")
-DEFAULT_FOREIGN_ANALYSIS_FILE = os.path.join(
-    ROOT_DIR, "foreign_literature_analysis.json"
-)
-DEFAULT_RECENT_ANALYSIS_FILE = os.path.join(
-    ROOT_DIR, "recent_literature_analysis.json"
-)
+# 默认使用 report/ 目录中的 JSON 作为输入输出位置
+DEFAULT_ITEMS_FILE = str(ZOTERO_ITEMS_FILE)
+DEFAULT_FOREIGN_ANALYSIS_FILE = str(FOREIGN_LITERATURE_ANALYSIS_FILE)
+DEFAULT_RECENT_ANALYSIS_FILE = str(RECENT_LITERATURE_ANALYSIS_FILE)
 
 
 def _load_literature_items(items_file: str) -> list[Literature]:
@@ -425,4 +425,3 @@ def main() -> None:
 
 if __name__ == "__main__":  # pragma: no cover - 脚本入口
     main()
-

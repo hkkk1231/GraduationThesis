@@ -16,14 +16,12 @@ from typing import Any
 import requests
 
 from .models import Literature
+from .paths import REPORT_DIR
 
 
 API_KEY = "CIApUKos6l9E0GOaCBrILRrt"
 LIBRARY_ID = "18982351"
 BASE_URL = "https://api.zotero.org"
-
-# 以当前包所在目录的上一级作为项目根目录，避免写死绝对路径。
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
 def fetch_from_zotero(
@@ -78,8 +76,12 @@ def save_items_to_files(
     items_without_notes: list[dict[str, Any]],
     output_dir: str | None = None,
 ) -> None:
-    """将处理后的文献信息写入 JSON 文件。"""
-    base_dir = output_dir or ROOT_DIR
+    """将处理后的文献信息写入 JSON 文件。
+
+    默认输出到 `report/` 目录，避免在仓库根目录堆积数据文件。
+    `output_dir` 仅在测试或特殊脚本中用于覆盖。
+    """
+    base_dir = output_dir or str(REPORT_DIR)
     os.makedirs(base_dir, exist_ok=True)
 
     all_items_path = os.path.join(base_dir, "zotero_items.json")
@@ -155,4 +157,3 @@ def main() -> None:
 
 if __name__ == "__main__":  # pragma: no cover - 脚本入口
     main()
-

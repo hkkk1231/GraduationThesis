@@ -18,6 +18,12 @@ from pathlib import Path
 from typing import Any, Sequence
 
 from . import obsidian_export, schemas, sync_checks, zotero_analysis, zotero_ingest
+from .paths import (
+    REPORT_DIR,
+    ZOTERO_ITEMS_FILE,
+    RECENT_LITERATURE_ANALYSIS_FILE,
+    FOREIGN_LITERATURE_ANALYSIS_FILE,
+)
 
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -101,8 +107,10 @@ def handle_setup(args: argparse.Namespace) -> int:
             "Obsidian vault 路径: 未配置（请检查 config/zotero_obsidian_config.json 中的 obsidian_vault_path）"
         )
 
-    report_dir = ROOT_DIR / "report"
-    print(f"report 目录: {report_dir} {'(已存在)' if report_dir.exists() else '(将按需创建)'}")
+    print(
+        f"report 目录: {REPORT_DIR} "
+        f"{'(已存在)' if REPORT_DIR.exists() else '(将按需创建)'}"
+    )
 
     return 0 if all_ok else 1
 
@@ -140,7 +148,10 @@ def handle_ingest(args: argparse.Namespace) -> int:
     processed_items = zotero_ingest.process_items(items)
     items_without_notes = zotero_ingest.split_items_by_notes(processed_items)
     zotero_ingest.print_summary(processed_items)
-    zotero_ingest.save_items_to_files(processed_items, items_without_notes)
+    # 将 JSON 输出统一写入 report/ 目录，避免根目录堆积数据文件
+    zotero_ingest.save_items_to_files(
+        processed_items, items_without_notes, output_dir=str(REPORT_DIR)
+    )
 
     return 0
 
@@ -168,7 +179,8 @@ def handle_export_notes(args: argparse.Namespace) -> int:
         )
         return 1
 
-    items_file = args.items_file or str(ROOT_DIR / "zotero_items.json")
+    # 默认从 report/ 目录下的 zotero_items.json 读取文献列表
+    items_file = args.items_file or str(ZOTERO_ITEMS_FILE)
     template_folder_name = config_data.get("template_folder", "模板")
     notes_folder_name = config_data.get("literature_notes_folder", "文献笔记")
 
@@ -246,9 +258,9 @@ def handle_report(args: argparse.Namespace) -> int:
     """`thesis report`：汇总现有 JSON 报告并做基础结构校验。"""
     print("=== 汇总当前分析与同步报告（thesis report） ===")
 
-    recent_path = ROOT_DIR / "recent_literature_analysis.json"
-    foreign_path = ROOT_DIR / "foreign_literature_analysis.json"
-    sync_report_path = ROOT_DIR / "report" / "obsidian_zotero_sync_report.json"
+    recent_path = RECENT_LITERATURE_ANALYSIS_FILE
+    foreign_path = FOREIGN_LITERATURE_ANALYSIS_FILE
+    sync_report_path = REPORT_DIR / "obsidian_zotero_sync_report.json"
 
     recent_data = _load_json_if_exists(recent_path)
     if recent_data is None:
@@ -364,7 +376,7 @@ def build_parser() -> argparse.ArgumentParser:
     export_parser.add_argument(
         "--items-file",
         dest="items_file",
-        help="Zotero items JSON 路径（默认项目根目录 zotero_items.json）",
+        help="Zotero items JSON 路径（默认 report/zotero_items.json）",
     )
     export_parser.add_argument(
         "--max-items",
@@ -437,4 +449,3 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 if __name__ == "__main__":  # pragma: no cover - 脚本入口
     raise SystemExit(main())
-

@@ -15,6 +15,8 @@ import re
 from datetime import datetime
 from typing import Any
 
+from .paths import ZOTERO_ITEMS_FILE
+
 
 def sanitize_filename(title: str) -> str:
     """清理文件名，移除不合法字符并限制长度。"""
@@ -213,7 +215,7 @@ def main() -> None:
     """命令行入口：基于默认路径生成最新文献笔记。"""
     print("=== 创建 Obsidian 文献笔记 ===")
 
-    items_file = r"E:\仓库\毕业论文\zotero_items.json"
+    items_file = str(ZOTERO_ITEMS_FILE)
     template_path = (
         r"E:\仓库\毕业论文\obsidian\04-工具模板\文献笔记模板\文献笔记模板.md"
     )

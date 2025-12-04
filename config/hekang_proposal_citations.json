@@ -1,0 +1,16 @@
+{
+    "description": "开题报告-贺康：段落与参考文献编号的映射配置，供 optimize_hekang_proposal_references.py 与后续脚本复用。",
+    "table_index": 0,
+    "sections": {
+        "background_p2": [1, 21],
+        "background_p3": [21, 26],
+        "background_p4": [14, 19],
+        "background_p5": [13, 21],
+        "meaning_theory": [21],
+        "meaning_practice": [5, 19],
+        "status_foreign": [1, 2, 3, 4],
+        "status_domestic_macro": [14, 19, 20, 21, 26],
+        "status_domestic_subject": [5, 11, 13, 16, 17, 22, 25, 27]
+    }
+}
+

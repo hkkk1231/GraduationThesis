@@ -88,8 +88,8 @@ async function main() {
 
         // 保存到文件
         const fs = require('fs');
-        const outputPath = 'E:\\仓库\\毕业论文\\zotero_items.json';
-        const outputPath2 = 'E:\\仓库\\毕业论文\\zotero_items_without_notes.json';
+        const outputPath = 'E:\\仓库\\毕业论文\\report\\zotero_items.json';
+        const outputPath2 = 'E:\\仓库\\毕业论文\\report\\zotero_items_without_notes.json';
         
         fs.writeFileSync(outputPath, JSON.stringify(processedItems, null, 2));
         fs.writeFileSync(outputPath2, JSON.stringify(itemsWithoutNotes, null, 2));

@@ -25,9 +25,9 @@
 - 调用方式：`python -m thesis_tools.cli <subcommand>`
 - 已实现子命令：
   - `setup`：检查配置文件、环境变量与 Obsidian vault 路径
-  - `ingest`：从 Zotero 拉取文献并写入 `zotero_items.json` / `zotero_items_without_notes.json`
-  - `analyze`：分析最近文献，生成 `recent_literature_analysis.json`
-  - `analyze --foreign-only`：分析外文文献，生成 `foreign_literature_analysis.json`
+  - `ingest`：从 Zotero 拉取文献并写入 `report/zotero_items.json` / `report/zotero_items_without_notes.json`
+  - `analyze`：分析最近文献，生成 `report/recent_literature_analysis.json`
+  - `analyze --foreign-only`：分析外文文献，生成 `report/foreign_literature_analysis.json`
   - `export-notes`：在 Obsidian 中批量生成最新文献笔记
   - `sync-check`：执行 Zotero API 与 Obsidian 结构健康检查
   - `report`：汇总当前 JSON 报告并做结构校验与简要汇总
@@ -41,7 +41,7 @@
   - 使用 `fetch_from_zotero` / `process_items` / `split_items_by_notes` / `save_items_to_files`
   - 自动打印基础统计信息，方便快速确认导入情况
 - `thesis analyze` / `--foreign-only` → `thesis_tools.zotero_analysis`
-  - 默认从 `ROOT_DIR / "zotero_items.json"` 加载数据
+  - 默认从 `report/zotero_items.json` 加载数据
   - 输出符合 `thesis_tools.schemas` 约定结构的 JSON 报告
 - `thesis export-notes` → `thesis_tools.obsidian_export`
   - 根据 `config/zotero_obsidian_config.json` 推导 vault 路径与模板/笔记目录
@@ -50,7 +50,7 @@
   - 复用 `run_zotero_api_checks` 与 `run_obsidian_zotero_sync_checks`
   - 在 CLI 层打印每一项检查的 OK/FAILED 状态
 - `thesis report` → `thesis_tools.schemas` + 现有 JSON 报告文件
-  - 对 `recent_literature_analysis.json` / `foreign_literature_analysis.json` /
+  - 对 `report/recent_literature_analysis.json` / `report/foreign_literature_analysis.json` /
     `report/obsidian_zotero_sync_report.json` 做轻量结构校验与总结输出
 
 > 小结：Phase 3 中，CLI 已经成为首选入口；传统脚本（根目录和 `scripts/` 下的文件）主要作为兼容层存在。
@@ -216,4 +216,3 @@
 
 > 本报告可作为“Phase 3 – 统一 CLI、服务化与测试体系”的最终归档记录，
 > 后续如继续演进 MCP 集成或深度阅读流水线，可在此基础上扩展下一阶段计划。 
-

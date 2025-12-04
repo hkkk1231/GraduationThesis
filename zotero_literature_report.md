@@ -130,9 +130,9 @@
 - 多维度统计分析
 
 ### 输出文件
-- `zotero_items.json`: 完整文献数据
-- `recent_literature_analysis.json`: 最近文献分析结果
-- `foreign_literature_analysis.json`: 外文文献分析结果（空）
+- `report/zotero_items.json`: 完整文献数据
+- `report/recent_literature_analysis.json`: 最近文献分析结果
+- `report/foreign_literature_analysis.json`: 外文文献分析结果（空）
 
 ---
 

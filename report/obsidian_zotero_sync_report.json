@@ -1,17 +1,17 @@
 {
-  "测试时间": "2025-12-04T10:46:13.453939",
+  "测试时间": "2025-12-04T17:13:53.002592",
   "测试结果": {
-    "zotero_connection": true,
+    "zotero_connection": false,
     "obsidian_structure": false,
     "templates": false,
     "pdf_folder": false,
     "test_note": false
   },
   "测试详情": {
-    "zotero_connection": "items=90",
+    "zotero_connection": "not found: C:\\Users\\28480\\Zotero\\zotero.sqlite",
     "obsidian_structure": "missing: E:\\仓库\\毕业论文\\obsidian\\AI笔记\\文献笔记, E:\\仓库\\毕业论文\\obsidian\\AI笔记\\PDF阅读, E:\\仓库\\毕业论文\\obsidian\\AI笔记\\研究项目, E:\\仓库\\毕业论文\\obsidian\\AI笔记\\核心概念, E:\\仓库\\毕业论文\\obsidian\\AI笔记\\理论框架, E:\\仓库\\毕业论文\\obsidian\\AI笔记\\模板, E:\\仓库\\毕业论文\\obsidian\\AI笔记\\引用管理",
     "templates": "missing: E:\\仓库\\毕业论文\\obsidian\\AI笔记\\模板\\文献笔记模板.md, E:\\仓库\\毕业论文\\obsidian\\AI笔记\\模板\\研究笔记模板.md",
     "pdf_folder": "not found: E:\\仓库\\毕业论文\\obsidian\\AI笔记\\PDF阅读",
-    "test_note": "no such column: d.title"
+    "test_note": "unable to open database file"
   }
 }

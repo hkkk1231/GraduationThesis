@@ -1,18 +1,18 @@
 ﻿# Repository Guidelines
 
 ## Project Structure & Module Organization
-Automation scripts live in the repository root (`get_zotero_items.py`, `create_obsidian_notes.py`, `analyze_foreign_literature.py`) and move Zotero data into the Obsidian vault. Long-lived configuration is in `config/` (JSON + Markdown) and architecture references in `docs/` plus `IFLOW.md`. The MCP controller resides in `ilfow/` beside `mcp_config.json`, while generated knowledge assets belong in `obsidian/` and monitoring outputs in `report/`; keep those directories tidy and version controlled.
+Core Python automation logic lives in the `thesis_tools/` package and is exposed via a unified CLI (`python -m thesis_tools.cli`). Convenience entry scripts live under `scripts/` (e.g. `scripts/get_zotero_items.py`, `scripts/create_obsidian_notes.py`) when you prefer direct calls. Long-lived configuration is in `config/` (JSON + Markdown) and architecture references in `docs/` plus `IFLOW.md`. The MCP controller resides in `ilfow/` beside `mcp_config.json`, while generated knowledge assets belong in `obsidian/` and monitoring outputs in `report/`; keep those directories tidy and version controlled.
 
 ## Build, Test, and Development Commands
 Target Python 3.12, Node LTS, and Windows paths. Typical loop:
 ```
 python -m venv .venv && .\.venv\Scripts\activate
 python -m pip install requests
-python get_zotero_items.py                # pull Zotero data into JSON
-python create_obsidian_notes.py           # emit Obsidian-ready notes
+python -m thesis_tools.cli ingest         # pull Zotero data into JSON
+python -m thesis_tools.cli export-notes   # emit Obsidian-ready notes
 cd ilfow && npm install && npm run start-mcp
-python test_zotero_api.py
-python test_obsidian_zotero_sync.py
+python scripts/test_zotero_api.py
+python scripts/test_obsidian_zotero_sync.py
 ```
 `npm run setup` installs the optional MCP servers listed in `ilfow/package.json`; invoke it only when provisioning a new machine.
 

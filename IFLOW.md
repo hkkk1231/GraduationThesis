@@ -64,9 +64,9 @@
 自第三阶段重构起，推荐通过统一 CLI 驱动整个 Zotero → 分析 → Obsidian 的流水线：
 
 - `python -m thesis_tools.cli setup`：检查配置文件、环境变量与 Obsidian vault 路径
-- `python -m thesis_tools.cli ingest`：从 Zotero 拉取文献并写入 `zotero_items.json`
-- `python -m thesis_tools.cli analyze`：分析最近文献，生成 `recent_literature_analysis.json`
-- `python -m thesis_tools.cli analyze --foreign-only`：生成 `foreign_literature_analysis.json`
+- `python -m thesis_tools.cli ingest`：从 Zotero 拉取文献并写入 `report/zotero_items.json`
+- `python -m thesis_tools.cli analyze`：分析最近文献，生成 `report/recent_literature_analysis.json`
+- `python -m thesis_tools.cli analyze --foreign-only`：生成 `report/foreign_literature_analysis.json`
 - `python -m thesis_tools.cli export-notes`：根据 JSON 与模板批量创建 Obsidian 文献笔记
 - `python -m thesis_tools.cli sync-check`：执行 Zotero API 与 Obsidian 目录结构健康检查
 - `python -m thesis_tools.cli report`：汇总当前 JSON 报告并给出结构校验结果

@@ -56,8 +56,8 @@
 
 ### 分析报告
 - `E:\仓库\毕业论文\zotero_literature_report.md` - 文献库分析报告
-- `E:\仓库\毕业论文\recent_literature_analysis.json` - 最近文献分析数据
-- `E:\仓库\毕业论文\foreign_literature_analysis.json` - 外文文献分析（空）
+- `E:\仓库\毕业论文\report\recent_literature_analysis.json` - 最近文献分析数据
+- `E:\仓库\毕业论文\report\foreign_literature_analysis.json` - 外文文献分析（空）
 
 ### Obsidian笔记
 - `E:\仓库\毕业论文\obsidian\02-文献管理\文献笔记\核心文献\最新文献笔记索引.md` - 笔记索引
