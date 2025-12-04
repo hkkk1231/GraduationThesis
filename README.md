@@ -73,12 +73,7 @@ python -m thesis_tools.cli setup
   - `mcp_client.py`：与 `ilfow` MCP 管理服务交互的封装（服务启动、停止等）  
   - `cli.py`：统一命令行入口（`python -m thesis_tools.cli`）
 
-- `scripts/`：命令行脚本入口（内部复用 `thesis_tools`）  
-  - `get_zotero_items.py` / `get_recent_literature.py` / `analyze_foreign_literature.py`  
-  - `create_obsidian_notes.py` / `batch_create_notes.py` / `create_sample_notes.py`  
-  - `setup_obsidian_zotero.py`：初始化 Obsidian + Zotero 集成环境  
-  - `test_zotero_api.py` / `test_obsidian_zotero_sync.py`：冒烟与集成测试入口  
-  - `optimize_proposal_references.py` / `optimize_hekang_proposal_references.py`：开题报告参考文献优化工具
+- `scripts/`：预留给未来的一次性脚本，目前为空；现有工作流全部通过 `thesis_tools.cli` 完成。  
 
 - `ilfow/`：MCP 服务（Node）与配置  
   - `mcp_config.json`：列出可用 MCP 服务与 HTTP 传输配置  
@@ -108,10 +103,10 @@ python -m thesis_tools.cli setup
 python -m unittest discover -s tests
 ```
 
-此外还有脚本级冒烟测试：
+此外推荐的 CLI 级冒烟检查：
 
-- `python scripts/test_zotero_api.py`：测试 Zotero API 连接  
-- `python scripts/test_obsidian_zotero_sync.py`：测试 Obsidian 目录结构与同步健康度（会更新 `report/obsidian_zotero_sync_report.json`）
+- `python -m thesis_tools.cli sync-check`：同时检查 Zotero API 与 Obsidian 结构  
+- `python -m thesis_tools.cli report`：汇总 `report/` 下各 JSON 报告并做结构校验
 
 ## 五、MCP 与 AI 能力
 
@@ -123,8 +118,8 @@ python -m unittest discover -s tests
 ## 六、常见问题 FAQ（摘要）
 
 - **Zotero API 连接失败**：  
-  - 检查 `ZOTERO_API_KEY` / `ZOTERO_LIBRARY_ID` 环境变量；  
-  - 可先运行 `python scripts/test_zotero_api.py` 做独立验证。
+   - 检查 `ZOTERO_API_KEY` / `ZOTERO_LIBRARY_ID` 环境变量；  
+   - 可先运行 `python -m thesis_tools.cli sync-check` 做独立验证。
 
 - **Obsidian 笔记未生成**：  
   - 确认 `config/zotero_obsidian_config.json` 中的 `obsidian_vault_path`、模板文件、目标目录是否存在；  

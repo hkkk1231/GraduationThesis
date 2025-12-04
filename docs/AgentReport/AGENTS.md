@@ -2,7 +2,7 @@
 
 ## 项目结构与模块组织 Project Structure & Module Organization
 - 核心 Python 自动化逻辑集中在 `thesis_tools/` 包中，并通过统一 CLI 入口 `python -m thesis_tools.cli` 暴露。
-- 命令行薄包装脚本集中在 `scripts/` 目录（如 `scripts/get_zotero_items.py`、`scripts/create_obsidian_notes.py`），用于需要直接运行脚本的场景。
+- `scripts/` 目录保留给未来的一次性脚本，目前默认空；推荐直接使用 CLI 而不是单独脚本。
 - 长期配置位于 `config/`，架构与流程文档在 `docs/`（本目录下为 agent-facing 报告），MCP 控制器在 `ilfow/`，生成的笔记在 `obsidian/`，监控与中间 JSON 输出在 `report/`。
 - 保持 `obsidian/` 与 `report/` 结构整洁并纳入版本控制；将 `config/` 与 `docs/` 视为工作流的权威说明。
 
@@ -14,9 +14,6 @@
   - `python -m thesis_tools.cli ingest` – 从 Zotero 拉取条目并生成/更新 `report/zotero_items.json` 等 JSON。
   - `python -m thesis_tools.cli analyze` – 分析最近文献，生成 `report/recent_literature_analysis.json` 等报告。
   - `python -m thesis_tools.cli export-notes` – 将文献转为 Obsidian 笔记。
-- 可选脚本入口（与旧用法兼容）：
-  - `python scripts/get_zotero_items.py`
-  - `python scripts/create_obsidian_notes.py`
 - MCP 服务：
   - `cd ilfow && npm install && npm run start-mcp`
   - 仅在新机器上运行 `npm run setup` 以安装可选 MCP servers。
@@ -28,9 +25,9 @@
 
 ## 测试规范 Testing Guidelines
 - 更推荐使用统一 CLI 与 `tests/`：
-  - `python scripts/test_zotero_api.py`：基于 `thesis_tools.sync_checks` 的 Zotero API 冒烟测试；更改凭据或 `config/zotero-config.md` 后运行。
-  - `python scripts/test_obsidian_zotero_sync.py`：检查 Obsidian vault 目录、模板存在性，并生成/更新 `report/obsidian_zotero_sync_report.json`。
-  - `pytest tests`：执行端到端与单元测试（如 `test_pipeline_e2e.py`、`test_obsidian_export.py`）。
+  - `python -m unittest discover -s tests`：执行端到端与单元测试（如 `test_pipeline_e2e.py`、`test_obsidian_export.py`）。
+  - `python -m thesis_tools.cli sync-check`：基于 `thesis_tools.sync_checks` 的 Zotero API 冒烟测试与 Obsidian 结构检查；更改凭据或 `config/zotero-config.md` 后运行。
+  - `python -m thesis_tools.cli report`：汇总 `report/` 下 JSON 报告并做结构校验。
 - 每次 ingestion 后，建议检查：
   - `report/zotero_items.json` / `report/recent_literature_analysis.json` 结构是否符合 `thesis_tools.schemas` 约定；
   - 新生成的 Obsidian 链接是否可点击回到 Zotero 条目。

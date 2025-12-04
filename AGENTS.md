@@ -1,18 +1,17 @@
 ﻿# Repository Guidelines
 
 ## Project Structure & Module Organization
-Core Python automation logic lives in the `thesis_tools/` package and is exposed via a unified CLI (`python -m thesis_tools.cli`). Convenience entry scripts live under `scripts/` (e.g. `scripts/get_zotero_items.py`, `scripts/create_obsidian_notes.py`) when you prefer direct calls. Long-lived configuration is in `config/` (JSON + Markdown) and architecture references in `docs/` plus `IFLOW.md`. The MCP controller resides in `ilfow/` beside `mcp_config.json`, while generated knowledge assets belong in `obsidian/` and monitoring outputs in `report/`; keep those directories tidy and version controlled.
+Core Python automation logic lives in the `thesis_tools/` package and is exposed via a unified CLI (`python -m thesis_tools.cli`). The `scripts/` directory is reserved for future one-off helpers but is intentionally kept empty; prefer calling the CLI directly instead of ad‑hoc scripts. Long-lived configuration is in `config/` (JSON + Markdown) and architecture references in `docs/` plus `IFLOW.md`. The MCP controller resides in `ilfow/` beside `mcp_config.json`, while generated knowledge assets belong in `obsidian/` and monitoring outputs in `report/`; keep those directories tidy and version controlled.
 
 ## Build, Test, and Development Commands
 Target Python 3.12, Node LTS, and Windows paths. Typical loop:
 ```
 python -m venv .venv && .\.venv\Scripts\activate
 python -m pip install requests
-python -m thesis_tools.cli ingest         # pull Zotero data into JSON
+python -m thesis_tools.cli ingest         # pull Zotero data into report/zotero_items.json
+python -m thesis_tools.cli analyze        # emit report/recent_literature_analysis.json
 python -m thesis_tools.cli export-notes   # emit Obsidian-ready notes
 cd ilfow && npm install && npm run start-mcp
-python scripts/test_zotero_api.py
-python scripts/test_obsidian_zotero_sync.py
 ```
 `npm run setup` installs the optional MCP servers listed in `ilfow/package.json`; invoke it only when provisioning a new machine.
 
