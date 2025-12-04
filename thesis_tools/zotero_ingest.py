@@ -1,0 +1,163 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Zotero 文献拉取与预处理模块。
+
+等价于原来的 ``get_zotero_items.py`` 核心逻辑，但以模块形式提供，
+便于被脚本入口与后续 CLI 复用。
+"""
+
+from __future__ import annotations
+
+import json
+import os
+from typing import Any
+
+import requests
+
+
+API_KEY = "CIApUKos6l9E0GOaCBrILRrt"
+LIBRARY_ID = "18982351"
+BASE_URL = "https://api.zotero.org"
+
+
+def fetch_from_zotero(
+    api_key: str = API_KEY,
+    library_id: str = LIBRARY_ID,
+    base_url: str = BASE_URL,
+    limit: int = 100,
+) -> list[dict[str, Any]]:
+    """从 Zotero API 拉取原始条目列表。"""
+    print("正在获取 Zotero 文献信息...")
+
+    headers = {"Zotero-API-Key": api_key}
+    url = f"{base_url}/users/{library_id}/items"
+    params = {"format": "json", "limit": limit}
+
+    try:
+        response = requests.get(url, headers=headers, params=params, timeout=30)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as exc:  # pragma: no cover - I/O
+        print(f"请求错误: {exc}")
+        return []
+
+    items = response.json()
+    print(f"成功获取 {len(items)} 个文献条目")
+    return items
+
+
+def process_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """提取关键信息，生成更适合下游处理的结构化列表。"""
+    processed_items: list[dict[str, Any]] = []
+
+    for item in items:
+        data = item.get("data", {})
+
+        processed_item = {
+            "key": data.get("key", ""),
+            "title": data.get("title", ""),
+            "creators": data.get("creators", []),
+            "date": data.get("date", ""),
+            "abstractNote": data.get("abstractNote", ""),
+            "publicationTitle": data.get("publicationTitle", ""),
+            "itemType": data.get("itemType", ""),
+            "tags": data.get("tags", []),
+            "notes": item.get("notes", []),
+        }
+
+        processed_items.append(processed_item)
+
+    return processed_items
+
+
+def split_items_by_notes(
+    processed_items: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """筛选出没有任何笔记的文献条目。"""
+    return [
+        item
+        for item in processed_items
+        if len(item.get("notes", [])) == 0 and item.get("itemType") != "note"
+    ]
+
+
+def save_items_to_files(
+    processed_items: list[dict[str, Any]],
+    items_without_notes: list[dict[str, Any]],
+    output_dir: str = r"E:\仓库\毕业论文",
+) -> None:
+    """将处理后的文献信息写入 JSON 文件。"""
+    os.makedirs(output_dir, exist_ok=True)
+
+    all_items_path = os.path.join(output_dir, "zotero_items.json")
+    without_notes_path = os.path.join(output_dir, "zotero_items_without_notes.json")
+
+    try:
+        with open(all_items_path, "w", encoding="utf-8") as f:
+            json.dump(processed_items, f, ensure_ascii=False, indent=2)
+
+        with open(without_notes_path, "w", encoding="utf-8") as f:
+            json.dump(items_without_notes, f, ensure_ascii=False, indent=2)
+    except Exception as exc:  # pragma: no cover - I/O
+        print(f"保存文件时出错: {exc}")
+        return
+
+    print("\n数据已保存到:")
+    print(f"- {all_items_path}")
+    print(f"- {without_notes_path}")
+
+
+def print_summary(processed_items: list[dict[str, Any]]) -> None:
+    """在控制台输出简要统计信息和无笔记文献列表。"""
+    items_without_notes = split_items_by_notes(processed_items)
+
+    print("\n=== 文献统计 ===")
+    print(f"总文献数: {len(processed_items)}")
+    with_notes = [
+        item for item in processed_items if len(item.get("notes", [])) > 0
+    ]
+    print(f"有笔记的文献数: {len(with_notes)}")
+    print(f"没有笔记的文献数: {len(items_without_notes)}")
+
+    print("\n=== 没有笔记的文献列表 ===")
+    for index, item in enumerate(items_without_notes, 1):
+        title = item.get("title", "")
+        print(f"\n{index}. {title}")
+
+        authors: list[str] = []
+        for creator in item.get("creators", []):
+            if creator.get("lastName") and creator.get("firstName"):
+                authors.append(f"{creator['lastName']} {creator['firstName']}")
+        print(f"   作者: {', '.join(authors) if authors else '未知'}")
+
+        print(f"   年份: {item.get('date') or '未知'}")
+        print(f"   期刊: {item.get('publicationTitle') or '未知'}")
+
+        abstract = item.get("abstractNote") or ""
+        if abstract:
+            abstract_preview = abstract[:100] + "..." if len(abstract) > 100 else abstract
+            print(f"   摘要: {abstract_preview}")
+        else:
+            print("   摘要: 无")
+
+        print(f"   Key: {item.get('key', '')}")
+
+
+def main() -> None:
+    """命令行入口：拉取 Zotero 文献并输出统计与 JSON。"""
+    print("=== Zotero 文献信息获取工具 ===")
+
+    items = fetch_from_zotero()
+    if not items:
+        print("未获取到文献信息，请检查 API 配置")
+        return
+
+    processed_items = process_items(items)
+    items_without_notes = split_items_by_notes(processed_items)
+    print_summary(processed_items)
+    save_items_to_files(processed_items, items_without_notes)
+
+
+if __name__ == "__main__":  # pragma: no cover - 脚本入口
+    main()
+
