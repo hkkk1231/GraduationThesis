@@ -1,5 +1,4 @@
-zotero/Base/translators/
-
+zotero\Base\translators
 # Python bytecode / caches
 __pycache__/
 *.py[cod]
